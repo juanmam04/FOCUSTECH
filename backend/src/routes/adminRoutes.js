@@ -6,5 +6,6 @@ import { adminMiddleware } from '../middlewares/adminMiddleware.js';
 const router = Router();
 
 router.get('/dashboard', authMiddleware, adminMiddleware, adminController.getDashboard);
+router.get('/analytics', authMiddleware, adminMiddleware, adminController.getAnalytics);
 
 export default router;

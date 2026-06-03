@@ -8,6 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "db:schema": "node database/runSchema.js",
+    "db:analytics": "node database/runAnalytics.js",
     "db:seed": "node database/seed.js"
   },
   "devDependencies": {

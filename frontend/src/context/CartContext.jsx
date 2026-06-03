@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { trackEvent } from '../utils/track';
 
 const STORAGE_KEY = 'focustech_cart';
 
@@ -42,6 +43,10 @@ export function CartProvider({ children }) {
           quantity: Math.min(quantity, product.stock),
         },
       ];
+    });
+    trackEvent('add_to_cart', `/producto/${product.slug}`, {
+      product_id: product.id,
+      quantity,
     });
   };
 

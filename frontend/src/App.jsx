@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Login from './pages/Login';
 import Dashboard from './pages/admin/Dashboard';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminProducts from './pages/admin/AdminProducts';
 import ProductForm from './pages/admin/ProductForm';
 import AdminCategories from './pages/admin/AdminCategories';
@@ -45,6 +46,7 @@ export default function App() {
 
               <Route path="/panel" element={<PanelLayout />}>
                 <Route index element={<Dashboard />} />
+                <Route path="analiticas" element={<AdminAnalytics />} />
                 <Route path="productos" element={<AdminProducts />} />
                 <Route path="productos/nuevo" element={<ProductForm />} />
                 <Route path="productos/:id/editar" element={<ProductForm />} />

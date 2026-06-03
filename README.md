@@ -152,6 +152,7 @@ const { supabase, user } = useSupabase();
 | **raíz** | `npm run dev` | Backend + frontend juntos |
 | raíz | `npm run install:all` | Instala deps en los 3 package.json |
 | raíz | `npm run db:schema` | Crear tablas en Supabase PostgreSQL |
+| raíz | `npm run db:analytics` | Tablas de tráfico y métricas (si ya tenés schema) |
 | raíz | `npm run db:seed` | Datos iniciales |
 | backend | `npm run dev` | Solo API (nodemon) |
 | frontend | `npm run dev` | Solo tienda (Vite) |

@@ -4,6 +4,7 @@ import './PanelLayout.css';
 
 const NAV = [
   { to: '/panel', end: true, label: 'Resumen' },
+  { to: '/panel/analiticas', label: 'Analíticas' },
   { to: '/panel/productos', label: 'Productos' },
   { to: '/panel/categorias', label: 'Categorías' },
   { to: '/panel/pedidos', label: 'Pedidos' },

@@ -7,6 +7,7 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import analyticsRoutes from './routes/analyticsRoutes.js';
 import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
 import { UPLOAD_DIR } from './middlewares/uploadMiddleware.js';
 import db from './config/db.js';
@@ -38,6 +39,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/analytics', analyticsRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.use(notFoundHandler);

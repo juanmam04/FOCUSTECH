@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getAnalyticsSessionId } from '../utils/analyticsSession';
+import { trackEvent } from '../utils/track';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { useCart } from '../context/CartContext';
@@ -38,6 +40,12 @@ export default function Checkout() {
     notes: '',
   });
 
+  useEffect(() => {
+    if (items.length > 0) {
+      trackEvent('begin_checkout', '/checkout', { items: items.length });
+    }
+  }, [items.length]);
+
   if (!items.length) {
     navigate('/carrito');
     return null;
@@ -57,6 +65,7 @@ export default function Checkout() {
     try {
       const res = await api.post('/orders', {
         ...form,
+        session_id: getAnalyticsSessionId(),
         items: items.map((i) => ({
           product_id: i.product_id,
           quantity: i.quantity,

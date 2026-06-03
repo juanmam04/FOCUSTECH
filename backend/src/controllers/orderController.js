@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator';
 import pool from '../config/db.js';
 import { generateOrderNumber } from '../utils/orderNumber.js';
+import { recordEvent } from '../services/analyticsService.js';
 
 const SHIPPING_COSTS = {
   montevideo: 0,
@@ -106,6 +107,16 @@ export async function createOrder(req, res, next) {
     }
 
     await connection.commit();
+
+    const sessionId = req.body.session_id;
+    if (sessionId) {
+      recordEvent({
+        sessionId,
+        eventType: 'purchase',
+        path: '/checkout',
+        payload: { order_id: orderId, total, order_number },
+      }).catch(() => {});
+    }
 
     const order = await getOrderById(orderId);
     res.status(201).json({ success: true, data: order });
