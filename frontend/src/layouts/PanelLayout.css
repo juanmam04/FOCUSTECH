@@ -1,0 +1,121 @@
+.panel {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+.panel__sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.25rem;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--bg-raised);
+}
+
+.panel__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 2.5rem;
+}
+
+.panel__brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, var(--accent), #7c3aed);
+  flex-shrink: 0;
+}
+
+.panel__brand-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+}
+
+.panel__brand-sub {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.panel__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.panel__nav a {
+  padding: 0.75rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.panel__nav a:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.panel__nav a.is-active {
+  color: var(--text-primary);
+  background: var(--accent-muted);
+  border: 1px solid rgba(192, 38, 211, 0.2);
+}
+
+.panel__sidebar-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.panel__store-link {
+  font-size: var(--text-sm);
+  color: var(--accent-soft);
+}
+
+.panel__user {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  word-break: break-all;
+}
+
+.panel__main {
+  flex: 1;
+  padding: 2rem clamp(1.25rem, 3vw, 2.5rem);
+  overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+  .panel { flex-direction: column; }
+
+  .panel__sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .panel__brand { margin-bottom: 0; }
+
+  .panel__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .panel__sidebar-foot {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}

@@ -1,0 +1,22 @@
+.admin-gate {
+  position: absolute;
+  z-index: 210;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.admin-gate:focus {
+  outline: none;
+}
+
+.admin-gate:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
+  opacity: 0.15;
+}

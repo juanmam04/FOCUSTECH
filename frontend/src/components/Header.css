@@ -1,0 +1,211 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--header-h);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(3, 3, 3, 0.78);
+  backdrop-filter: blur(24px) saturate(160%);
+}
+
+.header__inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header__gate {
+  top: 50%;
+  right: 6.75rem;
+  width: 36px;
+  height: 36px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 767px) {
+  .header__gate {
+    right: 4.25rem;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-right: auto;
+  z-index: 201;
+  flex-shrink: 0;
+}
+
+.header__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.header__logo-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.03em;
+}
+
+.header__logo-tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.header__nav {
+  display: none;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.header__nav a {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--duration-fast);
+  position: relative;
+}
+
+.header__nav a:hover,
+.header__nav a.active {
+  color: var(--text-primary);
+}
+
+.header__nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--accent-soft);
+}
+
+.header__cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition:
+    border-color var(--duration-fast),
+    background var(--duration-fast),
+    box-shadow var(--duration-fast);
+  z-index: 201;
+  flex-shrink: 0;
+}
+
+.header__cart:hover {
+  border-color: rgba(192, 38, 211, 0.4);
+  background: var(--bg-hover);
+  box-shadow: 0 0 24px rgba(192, 38, 211, 0.12);
+}
+
+.header__cart-icon {
+  display: flex;
+  color: var(--text-secondary);
+  transition: color var(--duration-fast);
+}
+
+.header__cart:hover .header__cart-icon {
+  color: var(--accent-soft);
+}
+
+.header__cart-label {
+  display: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.header__cart-count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: #fff;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.header__menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 201;
+  margin-left: auto;
+}
+
+.header__menu-btn span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--text-primary);
+  transition: transform var(--duration-fast), opacity var(--duration-fast);
+}
+
+.header__menu-btn[aria-expanded='true'] span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.header__menu-btn[aria-expanded='true'] span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+@media (min-width: 900px) {
+  .header__menu-btn { display: none; }
+
+  .header__nav { display: flex; }
+
+  .header__cart-label { display: inline; }
+
+  .header__menu-btn { margin-left: 0; }
+}
+
+@media (max-width: 899px) {
+  .header__inner {
+    flex-wrap: wrap;
+  }
+
+  .header__nav.is-open {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    order: 4;
+    width: 100%;
+    padding: 1.5rem 0 0.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .header__nav.is-open a {
+    font-size: var(--text-lg);
+  }
+
+  .header__cart {
+    margin-left: 0;
+  }
+}

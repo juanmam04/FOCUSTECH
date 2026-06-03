@@ -1,0 +1,118 @@
+.pdp__grid {
+  display: grid;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.pdp__gallery-main {
+  aspect-ratio: 1;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.pdp__gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdp__thumbs {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 1rem;
+}
+
+.pdp__thumbs button {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color var(--duration-fast);
+}
+
+.pdp__thumbs button.is-active { border-color: var(--accent); }
+
+.pdp__thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+.pdp__info h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 1rem 0;
+}
+
+.pdp__prices {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.pdp__price {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+}
+
+.pdp__compare {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+}
+
+.pdp__stock {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.pdp__desc {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.qty-control button {
+  width: 48px;
+  height: 48px;
+  background: var(--bg-elevated);
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background var(--duration-fast);
+}
+
+.qty-control button:hover { background: var(--bg-hover); }
+
+.qty-control span {
+  min-width: 52px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.pdp__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.pdp__related {
+  padding-top: 4rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 900px) {
+  .pdp__grid { grid-template-columns: 1fr 1fr; align-items: start; }
+}

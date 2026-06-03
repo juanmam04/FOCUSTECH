@@ -1,0 +1,33 @@
+.interactive-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.interactive-bg__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.interactive-bg__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, rgba(3, 3, 3, 0.85) 100%);
+  pointer-events: none;
+}
+
+.public-shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.public-shell__main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
