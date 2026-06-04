@@ -115,6 +115,19 @@ npm run dev
 - **Supabase:** cliente en `frontend/src/utils/supabase/` (adaptado a Vite, ver abajo)
 - **Mercado Pago:** preparado en `backend/src/config/mercadopago.js` (sin implementar)
 
+### Inicio con Google
+
+1. **Supabase → Authentication → Providers → Google**: activar y pegar Client ID / Secret de [Google Cloud Console](https://console.cloud.google.com/) (OAuth 2.0, redirect autorizado: `https://<tu-proyecto>.supabase.co/auth/v1/callback`).
+2. **Supabase → Authentication → URL Configuration → Redirect URLs**: agregar `http://localhost:1748/auth/callback` (y tu dominio en producción).
+3. En `.env.local` (raíz), agregar la **service role** del proyecto (Settings → API, solo backend, no subir a git):
+
+```
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+```
+
+El botón **Continuar con Google** en `/acceso` y `/registro` crea o vincula el usuario en la tabla `users` y devuelve el JWT de la tienda.
+
 ### Supabase (Vite, no Next.js)
 
 Variables en `frontend/.env.local`:
@@ -140,6 +153,8 @@ const { supabase, user } = useSupabase();
 | Método | Ruta | Acceso |
 |--------|------|--------|
 | POST | `/api/auth/login` | Público |
+| POST | `/api/auth/oauth` | Público (token Supabase tras Google) |
+| POST | `/api/auth/register` | Público |
 | GET | `/api/products` | Público (activos) |
 | POST | `/api/orders` | Público |
 | GET | `/api/admin/dashboard` | Admin |

@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import { AlertProvider } from './context/AlertContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { SupabaseProvider } from './context/SupabaseProvider';
 import PublicLayout from './layouts/PublicLayout';
 import PanelLayout from './layouts/PanelLayout';
@@ -11,6 +13,8 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
 import Dashboard from './pages/admin/Dashboard';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminProducts from './pages/admin/AdminProducts';
@@ -29,9 +33,11 @@ function LegacyAdminRedirect() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SupabaseProvider>
-        <AuthProvider>
-          <CartProvider>
+      <ThemeProvider>
+        <AlertProvider>
+        <SupabaseProvider>
+          <AuthProvider>
+            <CartProvider>
             <Routes>
               <Route element={<PublicLayout />}>
                 <Route index element={<Home />} />
@@ -43,6 +49,8 @@ export default function App() {
               </Route>
 
               <Route path="/acceso" element={<Login />} />
+              <Route path="/registro" element={<Register />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
 
               <Route path="/panel" element={<PanelLayout />}>
                 <Route index element={<Dashboard />} />
@@ -61,9 +69,11 @@ export default function App() {
               <Route path="/admin/login" element={<Navigate to="/acceso" replace />} />
               <Route path="/admin/*" element={<LegacyAdminRedirect />} />
             </Routes>
-          </CartProvider>
-        </AuthProvider>
-      </SupabaseProvider>
+            </CartProvider>
+          </AuthProvider>
+        </SupabaseProvider>
+        </AlertProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

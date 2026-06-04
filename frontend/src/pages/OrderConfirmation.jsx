@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import Alert from '../components/Alert';
 import { ORDER_STATUS_LABELS, formatPrice } from '../utils/format';
 import './OrderConfirmation.css';
 
@@ -42,7 +43,7 @@ export default function OrderConfirmation() {
   if (!order) {
     return (
       <div className="page container">
-        <div className="alert alert-error">No se encontró el pedido.</div>
+        <Alert variant="error">No se encontró el pedido.</Alert>
         <Link to="/" className="btn btn-outline">Ir al inicio</Link>
       </div>
     );

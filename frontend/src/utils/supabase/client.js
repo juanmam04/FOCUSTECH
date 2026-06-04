@@ -17,7 +17,12 @@ export function createClient() {
   }
 
   if (!browserClient && supabaseUrl && supabaseKey) {
-    browserClient = createBrowserClient(supabaseUrl, supabaseKey);
+    browserClient = createBrowserClient(supabaseUrl, supabaseKey, {
+      auth: {
+        flowType: 'pkce',
+        detectSessionInUrl: true,
+      },
+    });
   }
 
   return browserClient;

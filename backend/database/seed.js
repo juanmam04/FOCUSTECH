@@ -73,6 +73,35 @@ async function seed() {
     );
   }
   console.log('Productos de prueba creados.');
+
+  const stockPhotos = {
+    'FT-AIRPODS-PRO2': 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=800&h=800&fit=crop&q=80',
+    'FT-AIRPODS-3': 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=800&h=800&fit=crop&q=80',
+    'FT-CHG-20W': 'https://images.unsplash.com/photo-1591290619762-c588fafe69c2?w=800&h=800&fit=crop&q=80',
+    'FT-MAGSAFE-15': 'https://images.unsplash.com/photo-1611186874428-7e394e1e1e8c?w=800&h=800&fit=crop&q=80',
+    'FT-CBL-CL-1M': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=800&fit=crop&q=80',
+    'FT-CBL-CC-2M': 'https://images.unsplash.com/photo-1625948515291-69613efd448f?w=800&h=800&fit=crop&q=80',
+    'FT-ADP-USBC-A': 'https://images.unsplash.com/photo-1587825141308-601058ac0206?w=800&h=800&fit=crop&q=80',
+    'FT-FICHA-35W': 'https://images.unsplash.com/photo-1625948515291-69613efd448f?w=800&h=800&fit=crop&q=80',
+    'FT-CASE-IP15': 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&h=800&fit=crop&q=80',
+  };
+
+  for (const [sku, url] of Object.entries(stockPhotos)) {
+    const [rows] = await pool.query('SELECT id FROM products WHERE sku = ?', [sku]);
+    if (!rows.length) continue;
+    const productId = rows[0].id;
+    const [imgs] = await pool.query(
+      'SELECT id FROM product_images WHERE product_id = ? LIMIT 1',
+      [productId]
+    );
+    if (imgs.length) continue;
+    await pool.query(
+      'INSERT INTO product_images (product_id, image_url, is_main, position) VALUES (?, ?, TRUE, 0)',
+      [productId, url]
+    );
+  }
+  console.log('Imágenes de catálogo asignadas (si faltaban).');
+
   console.log('Seed completado.');
   process.exit(0);
 }

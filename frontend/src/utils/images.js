@@ -12,8 +12,8 @@ export function productPlaceholder(name) {
     `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
       <defs>
         <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#141416"/>
-          <stop offset="100%" stop-color="#0a0a0b"/>
+          <stop offset="0%" stop-color="#f0eef4"/>
+          <stop offset="100%" stop-color="#e8e5ef"/>
         </linearGradient>
         <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#c026d3" stop-opacity="0.35"/>

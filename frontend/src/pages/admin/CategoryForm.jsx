@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Alert from '../../components/Alert';
 import api from '../../api/client';
+import { useAlert } from '../../context/AlertContext';
 import { slugify } from '../../utils/slug';
 import './AdminShared.css';
 
@@ -12,6 +14,7 @@ export default function CategoryForm() {
   const [slugManual, setSlugManual] = useState(false);
   const [loading, setLoading] = useState(isEdit);
   const [error, setError] = useState('');
+  const { toast } = useAlert();
 
   useEffect(() => {
     if (!isEdit) return;
@@ -47,8 +50,10 @@ export default function CategoryForm() {
     try {
       if (isEdit) {
         await api.put(`/categories/${id}`, form);
+        toast.success('Categoría actualizada');
       } else {
         await api.post('/categories', form);
+        toast.success('Categoría creada');
       }
       navigate('/panel/categorias');
     } catch (err) {
@@ -61,7 +66,7 @@ export default function CategoryForm() {
   return (
     <div className="admin-page">
       <h1 className="admin-page__title">{isEdit ? 'Editar categoría' : 'Crear categoría'}</h1>
-      {error && <div className="alert alert-error">{error}</div>}
+      {error && <Alert variant="error">{error}</Alert>}
       <form className="admin-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="label">Nombre</label>

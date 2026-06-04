@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Alert from '../../components/Alert';
 import api from '../../api/client';
+import { useAlert } from '../../context/AlertContext';
 import { ORDER_STATUS_LABELS, formatPrice } from '../../utils/format';
 import './AdminShared.css';
 
@@ -9,7 +11,7 @@ export default function AdminOrderDetail() {
   const [order, setOrder] = useState(null);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
+  const { toast } = useAlert();
 
   const load = () => {
     api.get(`/orders/${id}`).then((res) => {
@@ -23,21 +25,20 @@ export default function AdminOrderDetail() {
   const updateStatus = async () => {
     try {
       await api.put(`/orders/${id}/status`, { status });
-      setMessage('Estado actualizado');
+      toast.success('Estado actualizado');
       load();
-    } catch {
-      setMessage('Error al actualizar estado');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error al actualizar estado');
     }
   };
 
   if (loading) return <div className="loading-screen"><div className="spinner" /></div>;
-  if (!order) return <div className="alert alert-error">Pedido no encontrado</div>;
+  if (!order) return <Alert variant="error">Pedido no encontrado</Alert>;
 
   return (
     <div className="admin-page">
       <Link to="/panel/pedidos" className="admin-link">← Volver a pedidos</Link>
       <h1 className="admin-page__title">Pedido {order.order_number}</h1>
-      {message && <div className="alert alert-success">{message}</div>}
 
       <div className="admin-stats" style={{ marginBottom: '2rem' }}>
         <div className="admin-stat-card">

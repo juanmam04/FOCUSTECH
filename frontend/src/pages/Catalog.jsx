@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../api/client';
+import Alert from '../components/Alert';
 import ProductCard from '../components/ProductCard';
 import './Catalog.css';
 
@@ -86,7 +87,7 @@ export default function Catalog() {
           </select>
         </div>
 
-        {error && <div className="alert alert-error">{error}</div>}
+        {error && <Alert variant="error">{error}</Alert>}
 
         {loading ? (
           <div className="loading-screen"><div className="spinner" /></div>

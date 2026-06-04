@@ -6,8 +6,9 @@
   z-index: 200;
   height: var(--header-h);
   border-bottom: 1px solid var(--border-subtle);
-  background: rgba(3, 3, 3, 0.78);
-  backdrop-filter: blur(24px) saturate(160%);
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--border-subtle);
 }
 
 .header__inner {
@@ -18,20 +19,80 @@
   gap: 1.25rem;
 }
 
-.header__gate {
-  top: 50%;
-  right: 6.75rem;
-  width: 36px;
-  height: 36px;
-  transform: translateY(-50%);
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 201;
+  flex-shrink: 0;
 }
 
-@media (max-width: 767px) {
-  .header__gate {
-    right: 4.25rem;
-    width: 40px;
-    height: 40px;
-  }
+.header__actions-auth {
+  display: none;
+}
+
+.header__theme {
+  flex-shrink: 0;
+}
+
+.header__auth-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header__auth {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  transition:
+    color var(--duration-fast),
+    background var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.header__auth--ghost {
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.header__auth--ghost:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.header__auth--login,
+.header__auth--panel {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+  border: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.header__auth--login:hover,
+.header__auth--panel:hover {
+  filter: brightness(1.06);
+}
+
+.header__auth-user {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  max-width: 7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header__nav-auth {
+  display: flex;
+  width: 100%;
+  padding-top: 0.5rem;
 }
 
 .header__logo {
@@ -83,14 +144,9 @@
   color: var(--text-primary);
 }
 
-.header__nav a.active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 1px;
-  background: var(--accent-soft);
+.header__nav a.active {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .header__cart {
@@ -101,7 +157,7 @@
   padding: 0.5rem 1rem 0.5rem 0.75rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-default);
-  background: var(--bg-surface);
+  background: var(--bg-elevated);
   color: var(--text-primary);
   transition:
     border-color var(--duration-fast),
@@ -112,19 +168,13 @@
 }
 
 .header__cart:hover {
-  border-color: rgba(192, 38, 211, 0.4);
+  border-color: var(--border-strong);
   background: var(--bg-hover);
-  box-shadow: 0 0 24px rgba(192, 38, 211, 0.12);
 }
 
 .header__cart-icon {
   display: flex;
   color: var(--text-secondary);
-  transition: color var(--duration-fast);
-}
-
-.header__cart:hover .header__cart-icon {
-  color: var(--accent-soft);
 }
 
 .header__cart-label {
@@ -141,10 +191,9 @@
   font-weight: 700;
   line-height: 20px;
   text-align: center;
-  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  background: var(--accent);
   color: #fff;
   border-radius: var(--radius-full);
-  box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 .header__menu-btn {
@@ -175,12 +224,24 @@
   transform: translateY(-3.75px) rotate(-45deg);
 }
 
+@media (min-width: 640px) {
+  .header__cart-label { display: inline; }
+}
+
 @media (min-width: 900px) {
   .header__menu-btn { display: none; }
 
-  .header__nav { display: flex; }
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
 
-  .header__cart-label { display: inline; }
+  .header__nav-auth { display: none; }
+
+  .header__actions-auth { display: flex; }
 
   .header__menu-btn { margin-left: 0; }
 }
@@ -205,7 +266,22 @@
     font-size: var(--text-lg);
   }
 
-  .header__cart {
-    margin-left: 0;
+  .header__nav-auth .header__auth-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .header__nav-auth .header__auth {
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    font-size: var(--text-base);
+  }
+
+  .header__nav-auth .header__auth-user {
+    max-width: none;
+    text-align: center;
+    padding-bottom: 0.25rem;
   }
 }

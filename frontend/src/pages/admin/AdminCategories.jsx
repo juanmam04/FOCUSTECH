@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
+import { useAlert } from '../../context/AlertContext';
 import './AdminShared.css';
 
 export default function AdminCategories() {
+  const { toast, confirm } = useAlert();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,12 +16,19 @@ export default function AdminCategories() {
   useEffect(() => { load(); }, []);
 
   const handleDelete = async (id, name) => {
-    if (!window.confirm(`¿Eliminar categoría "${name}"?`)) return;
+    const ok = await confirm({
+      title: 'Eliminar categoría',
+      message: `¿Eliminar "${name}"? Esta acción no se puede deshacer.`,
+      confirmText: 'Eliminar',
+      variant: 'danger',
+    });
+    if (!ok) return;
     try {
       await api.delete(`/categories/${id}`);
+      toast.success('Categoría eliminada');
       load();
     } catch (err) {
-      alert(err.response?.data?.message || 'Error al eliminar');
+      toast.error(err.response?.data?.message || 'Error al eliminar');
     }
   };
 

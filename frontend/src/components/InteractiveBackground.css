@@ -4,19 +4,53 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  background: var(--bg-base);
 }
 
-.interactive-bg__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.interactive-bg__vignette {
+.interactive-bg__blob {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, rgba(3, 3, 3, 0.85) 100%);
-  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: calc(var(--mesh-opacity) * 0.45);
+  animation: meshDrift 28s ease-in-out infinite;
+}
+
+.interactive-bg__blob--1 {
+  width: min(520px, 80vw);
+  height: min(520px, 80vw);
+  top: -15%;
+  right: -10%;
+  background: var(--mesh-1);
+}
+
+.interactive-bg__blob--2 {
+  width: min(420px, 65vw);
+  height: min(420px, 65vw);
+  bottom: 10%;
+  left: -12%;
+  background: var(--mesh-2);
+  animation-delay: -8s;
+}
+
+.interactive-bg__blob--3 {
+  width: min(320px, 50vw);
+  height: min(320px, 50vw);
+  top: 40%;
+  left: 35%;
+  background: var(--mesh-3);
+  animation-delay: -14s;
+}
+
+@keyframes meshDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, 24px) scale(1.03); }
+  66% { transform: translate(16px, -12px) scale(0.98); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-bg__blob {
+    animation: none;
+  }
 }
 
 .public-shell {

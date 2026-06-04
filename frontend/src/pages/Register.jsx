@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import InteractiveBackground from '../components/InteractiveBackground';
 import Logo from '../components/Logo';
@@ -8,25 +8,17 @@ import GoogleSignIn from '../components/GoogleSignIn';
 import ThemeToggle from '../components/ThemeToggle';
 import './Login.css';
 
-function redirectAfterAuth(user, from) {
-  if (user.role === 'admin') return from?.startsWith('/panel') ? from : '/panel';
-  if (from && !from.startsWith('/panel')) return from;
-  return '/';
-}
-
-export default function Login() {
-  const { user, login, loading } = useAuth();
+export default function Register() {
+  const { user, register, loading } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const from = location.state?.from?.pathname;
-
   if (!loading && user) {
-    return <Navigate to={redirectAfterAuth(user, from)} replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = async (e) => {
@@ -34,10 +26,13 @@ export default function Login() {
     setSubmitting(true);
     setError('');
     try {
-      const data = await login(email, password);
-      navigate(redirectAfterAuth(data.user, from), { replace: true });
+      await register(name, email, password);
+      navigate('/', { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || 'Credenciales incorrectas');
+      const msg = err.response?.data?.message
+        || err.response?.data?.errors?.[0]?.msg
+        || 'No se pudo crear la cuenta';
+      setError(msg);
     } finally {
       setSubmitting(false);
     }
@@ -54,22 +49,30 @@ export default function Login() {
           <Logo size={32} />
           Focus Tech
         </Link>
-        <h1 className="display">Iniciar sesión</h1>
+        <h1 className="display">Crear cuenta</h1>
         <p className="login-card__sub">
-          Entrá con tu email y contraseña.
+          Registrate gratis para comprar más rápido y seguir tus pedidos.
         </p>
 
         {error && <Alert variant="error">{error}</Alert>}
 
-        <GoogleSignIn
-          redirectTo={from || '/'}
-          disabled={submitting}
-          onError={setError}
-        />
+        <GoogleSignIn redirectTo="/" disabled={submitting} onError={setError} />
 
         <p className="login-divider">o con email</p>
 
         <form onSubmit={handleSubmit} className="login-card__form">
+          <div className="form-group">
+            <label className="label" htmlFor="name">Nombre</label>
+            <input
+              id="name"
+              className="input"
+              type="text"
+              autoComplete="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
           <div className="form-group">
             <label className="label" htmlFor="email">Email</label>
             <input
@@ -88,19 +91,21 @@ export default function Login() {
               id="password"
               className="input"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className="form-hint">Mínimo 8 caracteres.</p>
           </div>
           <button type="submit" className="btn btn-primary" disabled={submitting} style={{ width: '100%' }}>
-            {submitting ? 'Ingresando…' : 'Entrar'}
+            {submitting ? 'Creando cuenta…' : 'Registrarme'}
           </button>
         </form>
 
         <p className="login-card__switch">
-          ¿No tenés cuenta? <Link to="/registro">Crear cuenta</Link>
+          ¿Ya tenés cuenta? <Link to="/acceso">Iniciar sesión</Link>
         </p>
 
         <Link to="/" className="login-card__back">← Volver a la tienda</Link>

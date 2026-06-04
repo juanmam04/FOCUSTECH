@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import api from '../api/client';
+import Alert from '../components/Alert';
 import ProductCard from '../components/ProductCard';
+import { useAlert } from '../context/AlertContext';
 import { useCart } from '../context/CartContext';
 import { formatPrice } from '../utils/format';
 import { imageUrl, productPlaceholder } from '../utils/images';
@@ -11,6 +13,7 @@ export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { toast } = useAlert();
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
   const [qty, setQty] = useState(1);
@@ -43,7 +46,7 @@ export default function ProductDetail() {
   if (error || !product) {
     return (
       <div className="page container">
-        <div className="alert alert-error">{error}</div>
+        <Alert variant="error">{error}</Alert>
         <Link to="/productos" className="btn btn-outline">Volver al catálogo</Link>
       </div>
     );
@@ -108,7 +111,10 @@ export default function ProductDetail() {
               type="button"
               className="btn btn-primary"
               disabled={outOfStock}
-              onClick={() => addItem(product, qty)}
+              onClick={() => {
+                addItem(product, qty);
+                toast.success('Agregado al carrito', { title: product.name });
+              }}
             >
               Agregar al carrito
             </button>
@@ -116,7 +122,11 @@ export default function ProductDetail() {
               type="button"
               className="btn btn-accent"
               disabled={outOfStock}
-              onClick={() => { addItem(product, qty); navigate('/checkout'); }}
+              onClick={() => {
+                addItem(product, qty);
+                toast.info('Continuá con el pago', { title: 'Producto en el carrito' });
+                navigate('/checkout');
+              }}
             >
               Comprar ahora
             </button>

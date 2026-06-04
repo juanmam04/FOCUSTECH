@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { imageUrl, productPlaceholder } from '../utils/images';
+import { imageUrl } from '../utils/images';
+import { getStockPhoto, resolveProductImageSrc } from '../utils/productStockImages';
 
-export default function ProductImage({ path, name, alt, className, loading }) {
+export default function ProductImage({ path, name, alt, className, loading, categorySlug }) {
   const [failed, setFailed] = useState(false);
   const resolved = imageUrl(path);
-  const src = failed || !resolved ? productPlaceholder(name) : resolved;
+  const stockFallback = getStockPhoto(categorySlug);
+  const src = failed
+    ? stockFallback
+    : (resolved || resolveProductImageSrc(null, categorySlug));
 
   return (
     <img

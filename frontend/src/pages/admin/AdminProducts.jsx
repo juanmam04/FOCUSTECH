@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
+import { useAlert } from '../../context/AlertContext';
 import { formatPrice } from '../../utils/format';
 import './AdminShared.css';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
+  const { toast, confirm } = useAlert();
 
   const load = () => {
     setLoading(true);
@@ -20,13 +21,19 @@ export default function AdminProducts() {
   useEffect(() => { load(); }, []);
 
   const handleDelete = async (id, name) => {
-    if (!window.confirm(`¿Eliminar "${name}"?`)) return;
+    const ok = await confirm({
+      title: 'Eliminar producto',
+      message: `¿Eliminar "${name}"?`,
+      confirmText: 'Eliminar',
+      variant: 'danger',
+    });
+    if (!ok) return;
     try {
       await api.delete(`/products/${id}`);
-      setMessage('Producto eliminado');
+      toast.success('Producto eliminado');
       load();
-    } catch {
-      setMessage('Error al eliminar');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error al eliminar');
     }
   };
 
@@ -46,8 +53,8 @@ export default function AdminProducts() {
       };
       await api.put(`/products/${product.id}`, payload);
       load();
-    } catch {
-      setMessage('Error al actualizar');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error al actualizar');
     }
   };
 
@@ -57,7 +64,6 @@ export default function AdminProducts() {
         <h1 className="admin-page__title" style={{ margin: 0 }}>Productos</h1>
         <Link to="/panel/productos/nuevo" className="btn btn-primary btn-sm">+ Crear producto</Link>
       </div>
-      {message && <div className="alert alert-success">{message}</div>}
       {loading ? (
         <div className="loading-screen"><div className="spinner" /></div>
       ) : (

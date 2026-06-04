@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Alert from '../../components/Alert';
 import api from '../../api/client';
+import { useAlert } from '../../context/AlertContext';
 import { slugify } from '../../utils/slug';
 import { imageUrl } from '../../utils/images';
 import './AdminShared.css';
@@ -29,7 +31,7 @@ export default function ProductForm() {
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const { toast, confirm } = useAlert();
 
   useEffect(() => {
     api.get('/categories').then((res) => setCategories(res.data.data));
@@ -90,7 +92,7 @@ export default function ProductForm() {
     try {
       if (isEdit) {
         await api.put(`/products/${id}`, payload);
-        setSuccess('Producto actualizado');
+        toast.success('Producto actualizado');
       } else {
         const res = await api.post('/products', payload);
         navigate(`/panel/productos/${res.data.data.id}/editar`);
@@ -113,9 +115,10 @@ export default function ProductForm() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setImages(res.data.data);
-      setSuccess('Imágenes subidas');
+      toast.success('Imágenes subidas');
     } catch {
       setError('Error al subir imágenes');
+      toast.error('Error al subir imágenes');
     }
   };
 
@@ -130,9 +133,16 @@ export default function ProductForm() {
   };
 
   const removeImage = async (imageId) => {
-    if (!window.confirm('¿Eliminar imagen?')) return;
+    const ok = await confirm({
+      title: 'Eliminar imagen',
+      message: '¿Querés quitar esta imagen del producto?',
+      confirmText: 'Eliminar',
+      variant: 'danger',
+    });
+    if (!ok) return;
     await api.delete(`/products/images/${imageId}`);
     setImages((imgs) => imgs.filter((i) => i.id !== imageId));
+    toast.success('Imagen eliminada');
   };
 
   if (loading) {
@@ -142,8 +152,7 @@ export default function ProductForm() {
   return (
     <div className="admin-page">
       <h1 className="admin-page__title">{isEdit ? 'Editar producto' : 'Crear producto'}</h1>
-      {error && <div className="alert alert-error">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
+      {error && <Alert variant="error">{error}</Alert>}
 
       <form className="admin-form" onSubmit={handleSubmit}>
         <div className="form-group">

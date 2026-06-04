@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <script>
+      (function () {
+        var k = 'ft_theme';
+        var s = localStorage.getItem(k);
+        var t = s === 'dark' || s === 'light' ? s : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t;
+      })();
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

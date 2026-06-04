@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from '../components/ThemeToggle';
 import './PanelLayout.css';
 
 const NAV = [
@@ -56,6 +57,7 @@ export default function PanelLayout() {
         </nav>
 
         <div className="panel__sidebar-foot">
+          <ThemeToggle />
           <Link to="/" className="panel__store-link">Ver tienda pública</Link>
           <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
             Cerrar sesión

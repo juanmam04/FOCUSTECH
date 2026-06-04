@@ -5,6 +5,18 @@ export const loginValidation = [
   body('password').notEmpty().withMessage('Contraseña requerida'),
 ];
 
+export const oauthValidation = [
+  body('access_token').notEmpty().withMessage('Token de sesión requerido'),
+];
+
+export const registerValidation = [
+  body('name').trim().notEmpty().withMessage('Nombre requerido').isLength({ max: 100 }),
+  body('email').isEmail().withMessage('Email inválido').normalizeEmail(),
+  body('password')
+    .isLength({ min: 8 })
+    .withMessage('La contraseña debe tener al menos 8 caracteres'),
+];
+
 export const categoryValidation = [
   body('name').trim().notEmpty().withMessage('Nombre requerido'),
   body('slug').optional().trim(),

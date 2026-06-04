@@ -3,6 +3,7 @@ import { getAnalyticsSessionId } from '../utils/analyticsSession';
 import { trackEvent } from '../utils/track';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import Alert from '../components/Alert';
 import { useCart } from '../context/CartContext';
 import { DEPARTMENTS_UY, formatPrice } from '../utils/format';
 import './Checkout.css';
@@ -90,7 +91,7 @@ export default function Checkout() {
       </div>
       <form onSubmit={handleSubmit} className="checkout-layout">
         <div className="checkout-form-block">
-          {error && <div className="alert alert-error">{error}</div>}
+          {error && <Alert variant="error">{error}</Alert>}
 
           <h2>Datos de contacto</h2>
           <div className="form-group">

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import AdminGate from './AdminGate';
 import Logo from './Logo';
 import './Footer.css';
 
@@ -12,7 +11,6 @@ export default function Footer() {
             <Logo size={32} />
             <span>Focus Tech</span>
           </Link>
-          <AdminGate className="footer__gate footer__gate--brand" />
           <p className="footer__tagline">
             Tecnología seleccionada con envío a todo Uruguay.
           </p>
@@ -25,6 +23,12 @@ export default function Footer() {
             <Link to="/carrito">Carrito</Link>
           </div>
           <div>
+            <p className="footer__label">Cuenta</p>
+            <Link to="/acceso">Iniciar sesión</Link>
+            <Link to="/registro">Crear cuenta</Link>
+            <Link to="/panel">Panel admin</Link>
+          </div>
+          <div>
             <p className="footer__label">Contacto</p>
             <a href="mailto:info@focustech.com">info@focustech.com</a>
             <span>Montevideo, Uruguay</span>
@@ -34,7 +38,6 @@ export default function Footer() {
       </div>
       <div className="container footer__bottom">
         <p>© {new Date().getFullYear()} Focus Tech</p>
-        <AdminGate className="footer__gate" />
       </div>
     </footer>
   );

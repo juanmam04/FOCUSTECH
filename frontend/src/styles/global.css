@@ -12,10 +12,13 @@ html {
 body {
   font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text-primary);
   background: var(--bg-base);
   min-height: 100vh;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 #root { position: relative; }
@@ -49,9 +52,13 @@ button, input, select, textarea {
 .eyebrow {
   font-size: var(--text-xs);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent-soft);
+}
+
+[data-theme='light'] .eyebrow {
+  color: var(--accent);
 }
 
 /* Buttons */
@@ -60,7 +67,8 @@ button, input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
+  min-height: 44px;
+  padding: 0.75rem 1.75rem;
   font-size: var(--text-sm);
   font-weight: 600;
   border-radius: var(--radius-full);
@@ -77,14 +85,15 @@ button, input, select, textarea {
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .btn-primary {
-  background: var(--text-primary);
-  color: var(--bg-base);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+  color: #fff;
+  box-shadow: var(--shadow-accent);
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: var(--shadow-accent), var(--shadow-md);
-  background: #fff;
+  filter: brightness(1.06);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .btn-accent {
@@ -99,14 +108,14 @@ button, input, select, textarea {
 }
 
 .btn-outline {
-  background: transparent;
-  border: 1px solid var(--border-default);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
   color: var(--text-primary);
 }
 
 .btn-outline:hover:not(:disabled) {
   border-color: var(--border-strong);
-  background: var(--bg-hover);
+  background: var(--bg-elevated);
 }
 
 .btn-ghost {
@@ -121,7 +130,21 @@ button, input, select, textarea {
 }
 
 .btn-sm { padding: 0.5rem 1.125rem; font-size: var(--text-xs); }
+.btn-lg { padding: 0.95rem 2rem; font-size: 1rem; }
 .btn-danger { background: var(--danger); color: #fff; }
+
+.btn-whatsapp {
+  background: #25d366;
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+.btn-whatsapp:hover:not(:disabled) {
+  background: #20bd5a;
+  filter: none;
+  transform: translateY(-1px);
+}
 
 /* Forms */
 .label {
@@ -166,24 +189,15 @@ button, input, select, textarea {
   .form-row { grid-template-columns: 1fr 1fr; }
 }
 
-/* Alerts */
-.alert {
-  padding: 1rem 1.25rem;
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  border: 1px solid;
+/* Botón destructivo (confirmaciones) */
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border: none;
 }
 
-.alert-error {
-  background: rgba(248, 113, 113, 0.08);
-  border-color: rgba(248, 113, 113, 0.25);
-  color: #fecaca;
-}
-
-.alert-success {
-  background: rgba(52, 211, 153, 0.08);
-  border-color: rgba(52, 211, 153, 0.25);
-  color: #a7f3d0;
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
 /* Badge */
@@ -203,8 +217,8 @@ button, input, select, textarea {
 
 .badge-accent {
   background: var(--accent-muted);
-  border-color: rgba(192, 38, 211, 0.25);
-  color: var(--accent-soft);
+  border-color: rgba(192, 38, 211, 0.2);
+  color: var(--accent);
 }
 
 /* Layout */
@@ -223,7 +237,7 @@ button, input, select, textarea {
   font-size: var(--text-3xl);
   font-weight: 700;
   letter-spacing: -0.03em;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .section-head p {
@@ -234,8 +248,14 @@ button, input, select, textarea {
 
 .grid-products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid-products {
+    gap: 1.5rem;
+  }
 }
 
 /* Loading */
